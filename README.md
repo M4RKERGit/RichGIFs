@@ -1,0 +1,2 @@
+# RichGIFs
+Rubles or GIFs!!!
