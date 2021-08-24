@@ -1,0 +1,39 @@
+@import url("https://fonts.googleapis.com/css?family=Montserrat:700,900&subset=cyrillic");
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,700,700i&subset=cyrillic');
+@import url('https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css');
+@import url('https://fonts.googleapis.com/css2?family=Play:wght@400;700&display=swap');
+
+body
+{
+    text-align: center;
+    background-color: #444a5a;
+    color: #EEEEEE;
+    font-family: 'Play', sans-serif;
+}
+
+.header
+{
+    background-color: #444a5a;
+    height: 90px;
+    z-index: 9000;
+    width: 100%;
+}
+
+.upperString
+{
+    padding-top: 1.5%;
+    padding-bottom: 20px;
+    padding-left: 25px;
+    display: inline-block;
+    font-size: 30px;
+    float: left;
+}
+
+.bordered
+{
+    font-size: 30px;
+    align-items: center;
+    border: 3px solid #fff;
+    border-radius: 10px;
+    padding: 10px;
+}
