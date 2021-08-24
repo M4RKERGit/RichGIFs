@@ -1,6 +1,6 @@
 package com.example.richgifs.getters;
 
-import com.example.richgifs.Logger;
+import com.example.richgifs.tools.Logger;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.BufferedReader;
@@ -12,7 +12,7 @@ import java.net.URL;
 public abstract class Getter
 {
     protected String apiKey;
-    protected Logger logger = new Logger("[" + getClass().getSimpleName() + "]");
+    protected final Logger logger = new Logger("[" + getClass().getSimpleName() + "]");
     protected ObjectMapper JSONMapper;
 
     public String connectAndGet(String searchURL)
