@@ -50,10 +50,8 @@ public class RequestController
     @GetMapping("/feign/{currency}")
     public String getFeign(@PathVariable String currency)
     {
-        var today = exchangeFeignClient.getStatistic(currency,
-                comparator.getExchangeKey(), Additional.getDate(0));
-        var yesterday = exchangeFeignClient.getStatistic(currency,
-                comparator.getExchangeKey(), Additional.getDate(-1));
+        var today = exchangeFeignClient.getStatistic(comparator.getExchangeKey(), Additional.getDate(0));
+        var yesterday = exchangeFeignClient.getStatistic(comparator.getExchangeKey(), Additional.getDate(-1));
         if (comparator.compareExchanges(today, yesterday, currency)) return comparator.findGif(gifsFeignClient.getGIF(comparator.getGifKey(), "rich"));
         else return comparator.findGif(gifsFeignClient.getGIF(comparator.getGifKey(), "broke"));
     }
@@ -61,17 +59,17 @@ public class RequestController
     @GetMapping("/api/{currency}")
     public String getJSONResponse(@PathVariable String currency)
     {
-        return "{\"headerMsg\" : \"Курс USD к доллару на 2021-08-24 20:38:51\", \"firstCourse\" : 1.0, \"secondCourse\" : 1.0, \"gifURL\" : \"https://giphy.com/gifs/the-office-michael-scott-graduation-Qa5dsjQjlCqOY\"}";
-        /*float today = 0, yesterday = 0;
-        String headerMsg = "Курс " + currency + " к доллару на " + Additional.getCurrentTime();
-        var todaystring = exchangeFeignClient.getStatistic(currency, comparator.getExchangeKey(), Additional.getDate(0));
+        //return "{\"headerMsg\" : \"Курс USD к доллару на 2021-08-24 20:38:51\", \"firstCourse\" : 1.0, \"gifURL\" : \"https://giphy.com/gifs/the-office-michael-scott-graduation-Qa5dsjQjlCqOY\"}";
+        float today = 0;
+        String headerMsg = "Курс " + currency + " к USD на " + Additional.getCurrentTime();
+        var todaystring = exchangeFeignClient.getStatistic(comparator.getExchangeKey(), Additional.getDate(0));
 
         try {today = Float.parseFloat(JSONMapper.readValue(todaystring, JsonNode.class).findValuesAsText(currency).get(0));}
         catch (IOException e) {logger.createLog("Can't get exchange");}
 
-        APIResponse response = new APIResponse(headerMsg, today, yesterday, getFeign(currency));
+        APIResponse response = new APIResponse(headerMsg, today, getFeign(currency));
         try {return JSONMapper.writeValueAsString(response);}
-        catch (JsonProcessingException e) {logger.createLog("JSONMapper error"); return "Request error";}*/
+        catch (JsonProcessingException e) {logger.createLog("JSONMapper error"); return "Request error";}
     }
 }
 

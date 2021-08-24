@@ -10,7 +10,7 @@ public class APIResponse
     private final float firstCourse;
     private final String gifURL;
 
-    public APIResponse(String headerMsg, float firstCourse, float secondCourse, String gifURL)
+    public APIResponse(String headerMsg, float firstCourse, String gifURL)
     {
         this.firstCourse = firstCourse;
         this.gifURL = gifURL;

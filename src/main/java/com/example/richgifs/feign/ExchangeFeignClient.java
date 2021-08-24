@@ -9,5 +9,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 public interface ExchangeFeignClient
 {
     @GetMapping("historical/{date}.json?app_id={apiKey}")
-        public String getStatistic(@PathVariable String currency, @PathVariable String apiKey, @PathVariable String date);
+    public String getStatistic(@PathVariable String apiKey, @PathVariable String date);
+
+    @GetMapping("currencies.json")
+    public String getAllCurrencies();
 }
