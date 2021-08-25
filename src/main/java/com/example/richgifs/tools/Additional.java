@@ -7,7 +7,7 @@ import java.time.format.DateTimeFormatter;
 
 public class Additional
 {
-    private static final Logger logger = new Logger("[" + Additional.class.getSimpleName() + "]");
+    private static final Logger logger = new Logger("[" + Additional.class.getSimpleName().toUpperCase() + "]");
 
     public static String getCurrentTime()
     {

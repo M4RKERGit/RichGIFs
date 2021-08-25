@@ -2,15 +2,13 @@ package com.example.richgifs.tools;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.Getter;
-import lombok.Setter;
 
 import java.io.IOException;
 import java.util.Random;
 
 public class Analyze
 {
-    private static final Logger logger = new Logger("[" + Analyze.class.getSimpleName() + "]");
+    private static final Logger logger = new Logger("[" + Analyze.class.getSimpleName().toUpperCase() + "]");
     private static final ObjectMapper JSONMapper = new ObjectMapper();
 
     public static String parseGif(String output)

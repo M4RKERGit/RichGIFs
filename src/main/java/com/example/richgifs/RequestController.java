@@ -23,7 +23,7 @@ import java.util.HashMap;
 @RestController
 public class RequestController
 {
-    private static final Logger logger = new Logger("[" + RequestController.class.getSimpleName() + "]");
+    private static final Logger logger = new Logger("[" + RequestController.class.getSimpleName().toUpperCase() + "]");
     private final Configuration configuration = new Configuration();
     private static final ObjectMapper JSONMapper = new ObjectMapper();
 
@@ -58,10 +58,10 @@ public class RequestController
         else return Analyze.parseGif(gifsFeignClient.getGIF(configuration.getGifKey(), "broke"));
     }
 
-    @GetMapping("/api/{currency}")
+    @GetMapping(value = "/api/{currency}", produces = "application/json")
     public String getJSONResponse(@PathVariable String currency)
     {
-        //return "{\"headerMsg\" : \"Курс RUB к доллару на 2021-08-24 20:38:51\", \"course\" : 73.8960, \"gifURL\" : \"https://giphy.com/gifs/the-office-michael-scott-graduation-Qa5dsjQjlCqOY\"}";
+        //return "{\"headerMsg\" : \"Курс RUB к USD на 2021-08-25 05:25:18\", \"course\" : 73.8542, \"courseYesterday\" : 74.2789, \"gifURL\" : \"https://giphy.com/gifs/insatiable-netflix-angie-1ppudqsvJAWPa63iLU\"}";
         float today = 0, yesterday = 0;
         String gifURL;
         String headerMsg = "Курс " + currency + " к USD на " + Additional.getCurrentTime();
