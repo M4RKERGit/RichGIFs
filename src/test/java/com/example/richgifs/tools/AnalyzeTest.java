@@ -10,10 +10,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Collections;
 
-class AnalyzeTest
+class AnalyzeTest   //unit-тесты функций анализатора с семплами, проходят
 {
     AnalyzeTest() throws IOException {}
-
     @Test
     void compareExchangesTest1()
     {

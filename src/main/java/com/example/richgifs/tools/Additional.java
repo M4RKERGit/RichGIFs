@@ -9,13 +9,13 @@ public class Additional
 {
     private static final Logger logger = new Logger("[" + Additional.class.getSimpleName().toUpperCase() + "]");
 
-    public static String getCurrentTime()
+    public static String getCurrentLocalTime()
     {
         LocalDateTime dateTime = LocalDateTime.now();
         return dateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
     }
 
-    public static String getDate(int indent)
+    public static String getGreenwichDate(int indent)
     {
         ZonedDateTime dateTime; //использую время по Гринвичу, т.к. в промежутке от 12 до 3 ночи сервис даёт сбой из-за даты "из будущего"
         if (indent < 0) {dateTime = ZonedDateTime.now(ZoneOffset.UTC).minusDays(Math.abs(indent));}

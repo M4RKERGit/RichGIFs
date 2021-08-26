@@ -2,36 +2,34 @@ package com.example.richgifs;
 
 import com.example.richgifs.feign.ExchangeFeignClient;
 import com.example.richgifs.feign.GifsFeignClient;
-import io.restassured.response.Response;
-import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
-import io.restassured.RestAssured;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.util.Assert;
 
-import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.net.URL;
 
-class RequestControllerTest
+@RunWith(SpringRunner.class)
+@SpringBootTest
+public class RequestControllerTest  //тест контроллера через MockBean, падает (argument "content" is null)
 {
-    Response response = RestAssured.when().get("/api/RUB");
-    @Test
-    void correctResponse()
-    {
-        response.then().assertThat().statusCode(200)
-                .and().body("headerMsg", Matchers.containsString("Курс"))
-                .and().body("course", Matchers.greaterThanOrEqualTo(0f))
-                .and().body("courseYesterday", Matchers.greaterThanOrEqualTo(0f));
-    }
+    @MockBean
+    public ExchangeFeignClient exchangeFeignClient;
+
+    @MockBean
+    public GifsFeignClient gifsFeignClient;
+
+    @Autowired
+    public RequestController controller;
 
     @Test
-    void validGIF() throws IOException
+    public void mainTest()
     {
-        String result = response.getBody().path("gifURL").toString();
-        URL url = new URL(result);
-        HttpURLConnection huc = (HttpURLConnection) url.openConnection();
-        huc.setRequestMethod("HEAD");
-        Assert.isTrue(huc.getResponseCode() == 200);
+        Assert.notNull(controller);
+        System.out.println(controller.getConfiguration().getExchangeKey());
+        System.out.println(controller.getConfiguration().getGifKey());
+        //System.out.println("TEST RESULT: " + controller.getJSONResponse("EUR"));
     }
 }

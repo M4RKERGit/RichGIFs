@@ -9,7 +9,7 @@ public class Logger
 {
     private final String modulePrefix;
     private static int logCount = 0;
-    private static final String startTime = Additional.getCurrentTime();
+    private static final String startTime = Additional.getCurrentLocalTime();
 
     public String getModulePrefix() {return modulePrefix;}
     public static int getLogCount() {return logCount;}
@@ -22,7 +22,7 @@ public class Logger
 
     public void createLog(String message)
     {
-        String log = Additional.getCurrentTime() + ' ' + this.modulePrefix + ' ' + message;
+        String log = Additional.getCurrentLocalTime() + ' ' + this.modulePrefix + ' ' + message;
         try
         {
             if (!Files.exists(Path.of("log.txt")))
