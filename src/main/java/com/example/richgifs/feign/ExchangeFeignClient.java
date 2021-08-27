@@ -6,11 +6,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 
 @FeignClient(name = "Exchange", url = "https://openexchangerates.org/api/")
-public interface ExchangeFeignClient
+public interface ExchangeFeignClient    //интерфейс Feign для обращения к валютам
 {
     @GetMapping("historical/{date}.json?app_id={apiKey}")
-    public String getStatistic(@PathVariable String apiKey, @PathVariable String date);
+    public String getStatistic(@PathVariable String apiKey, @PathVariable String date); //получение курса на выбранную дату
 
     @GetMapping("currencies.json")
-    public String getAllCurrencies();
+    public String getAllCurrencies();   //получение списка всех валют (заменено в JS)
 }

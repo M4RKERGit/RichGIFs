@@ -4,11 +4,11 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Getter @Setter
-public class APIResponse
+public class APIResponse    //класс описания ответа от API, для формирования ответа в контроллере
 {
-    private final String headerMsg;
-    private final float course, courseYesterday;
-    private final String gifURL;
+    private final String headerMsg; //заголовок сообщения на сайте
+    private final float course, courseYesterday;    //курсы валюты
+    private final String gifURL;    //ссылка на GIF, обрабатывается в embed на конечной машине
 
     public APIResponse(String headerMsg, float course, float courseYesterday, String gifURL)
     {

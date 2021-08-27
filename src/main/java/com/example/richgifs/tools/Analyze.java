@@ -6,12 +6,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 import java.util.Random;
 
-public class Analyze
+public class Analyze    //набор утилит для анализа ответов от API
 {
     private static final Logger logger = new Logger("[" + Analyze.class.getSimpleName().toUpperCase() + "]");
     private static final ObjectMapper JSONMapper = new ObjectMapper();
 
-    public static String parseGif(String output)
+    public static String parseGif(String output)    //метод выбора рандомной гифки, возвращает ссылку на неё
     {
         try
         {
@@ -24,17 +24,10 @@ public class Analyze
         return "";
     }
 
-    public static int compareExchanges(String today, String yesterday, String currency)
+    public static int compareExchanges(float today, float yesterday, String currency)
+    //метод сравнения двух курсов валюты, возвращает -1/0/1 в случае, если первая меньше/равны/вторая меньше
     {
-        float valueToday = 0f, valueYesterday = 0f;
-
-        try {valueToday = Float.parseFloat(JSONMapper.readValue(today, JsonNode.class).findValuesAsText(currency).get(0));}
-        catch (IOException e) {logger.createLog("Error getting today exchange");}
-
-        try {valueYesterday = Float.parseFloat(JSONMapper.readValue(yesterday, JsonNode.class).findValuesAsText(currency).get(0));}
-        catch (IOException e) {logger.createLog("Error getting yesterday exchange");}
-
-        logger.createLog("Today:" + valueToday + "\tYesterday: " + valueYesterday);
-        return Float.compare(valueToday, valueYesterday);
+        logger.createLog("Today:" + today + "\tYesterday: " + yesterday);
+        return Float.compare(today, yesterday);
     }
 }

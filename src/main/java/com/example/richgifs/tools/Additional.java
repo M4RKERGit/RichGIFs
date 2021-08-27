@@ -5,23 +5,21 @@ import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 
-public class Additional
+public class Additional //класс с набором микро-утилит, вспомогательные инструменты
 {
     private static final Logger logger = new Logger("[" + Additional.class.getSimpleName().toUpperCase() + "]");
 
-    public static String getCurrentLocalTime()
+    public static String getCurrentLocalTime()  //получение текущего времени для логгирования
     {
         LocalDateTime dateTime = LocalDateTime.now();
         return dateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
     }
 
-    public static String getGreenwichDate(int indent)
+    public static String getGreenwichDate(int indent)   //получение даты по Гринвичу для запроса к валютам
     {
         ZonedDateTime dateTime; //использую время по Гринвичу, т.к. в промежутке от 12 до 3 ночи сервис даёт сбой из-за даты "из будущего"
-        if (indent < 0) {dateTime = ZonedDateTime.now(ZoneOffset.UTC).minusDays(Math.abs(indent));}
+        if (indent < 0) {dateTime = ZonedDateTime.now(ZoneOffset.UTC).minusDays(Math.abs(indent));} //определяем, нужна дата текущая или вчерашняя
         else dateTime = ZonedDateTime.now(ZoneOffset.UTC);
-        String toRet = dateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-        logger.createLog(toRet);
-        return toRet;
+        return dateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
     }
 }

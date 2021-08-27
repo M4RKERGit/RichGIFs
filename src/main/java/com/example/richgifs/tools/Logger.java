@@ -1,21 +1,20 @@
 package com.example.richgifs.tools;
 
+import lombok.Getter;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
 
-public class Logger
+@Getter
+public class Logger //класс для логгирования информации о запуске/выключении/исключениях в программе
 {
     private final String modulePrefix;
     private static int logCount = 0;
     private static final String startTime = Additional.getCurrentLocalTime();
 
-    public String getModulePrefix() {return modulePrefix;}
-    public static int getLogCount() {return logCount;}
-    public static String getStartTime() {return startTime;}
-
-    public Logger(String prefix)
+    public Logger(String prefix) //логгер создается в каждом классе, имеющем методы, с определенным префиксом формата [ИМЯ_КЛАССА]
     {
         this.modulePrefix = prefix;
     }
