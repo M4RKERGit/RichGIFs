@@ -1,5 +1,8 @@
 package com.example.richgifs.tools;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.util.Assert;
 
@@ -12,46 +15,37 @@ import java.util.Collections;
 
 class AnalyzeTest   //unit-тесты функций анализатора с семплами, проходят
 {
+    String inputGif = Files.readString(Path.of("samples/gifSample.txt"));
+    String inputExT = Files.readString(Path.of("samples/todaySample.txt"));
+    String inputExY = Files.readString(Path.of("samples/yesterdaySample.txt"));
+    
     AnalyzeTest() throws IOException {}
+
     @Test
-    void compareExchangesTest1()
+    void currencySample() throws JsonProcessingException
     {
-        String[] first = new String[]{"{\"rates\": {\"AED\": 3.6732}}", "{\"rates\": {\"AED\": 3.9967}}"};
-        int f = Analyze.compareExchanges(first[0], first[1], "AED");
-        Assert.isTrue(-1 == f);
-    }
-    @Test
-    void compareExchangesTest2()
-    {
-        String[] second = new String[]{"{\"rates\": {\"AED\": 5.5555}}", "{\"rates\": {\"AED\": 5.5555}}"};
-        int s = Analyze.compareExchanges(second[0], second[1], "AED");
-        Assert.isTrue(0 == s);
-    }
-    @Test
-    void compareExchangesTest3()
-    {
-        String[] third = new String[]{"{\"rates\": {\"AED\": 14.6783345}}", "{\"rates\": {\"AED\": 12.90991177}}"};
-        int t = Analyze.compareExchanges(third[0], third[1], "AED");
-        Assert.isTrue(1 == t);
+        ObjectMapper JSONMapper = new ObjectMapper();
+        float today = Float.parseFloat(JSONMapper.readValue(inputExT, JsonNode.class).findValuesAsText("CZK").get(0));
+        float yesterday = Float.parseFloat(JSONMapper.readValue(inputExY, JsonNode.class).findValuesAsText("CZK").get(0));
+        Assert.isTrue(1 == Analyze.compareExchanges(today, yesterday, "RUB"));
     }
 
-    String input = Files.readString(Path.of("samples/gifSample.txt"));
     @Test
     void parseGifNonEmpty()
     {
-        String result = Analyze.parseGif(input);
+        String result = Analyze.parseGif(inputGif);
         Assert.notEmpty(Collections.singleton(result));
     }
     @Test
     void parseGifContainsURL()
     {
-        String result = Analyze.parseGif(input);
+        String result = Analyze.parseGif(inputGif);
         Assert.isTrue(result.contains("https://giphy.com/gifs/"));
     }
     @Test
     void parseGifCorrectResponse() throws IOException
     {
-        String result = Analyze.parseGif(input);
+        String result = Analyze.parseGif(inputGif);
         URL url = new URL(result);
         HttpURLConnection huc = (HttpURLConnection) url.openConnection();
         huc.setRequestMethod("HEAD");

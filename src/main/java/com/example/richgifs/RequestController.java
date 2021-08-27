@@ -24,9 +24,9 @@ import java.util.HashMap;
 @Getter
 public class RequestController  //класс главного REST-контроллера
 {
-    private static final Logger logger = new Logger("[" + RequestController.class.getSimpleName().toUpperCase() + "]");
+    private final Logger logger = new Logger("[" + RequestController.class.getSimpleName().toUpperCase() + "]");
     private final Configuration configuration = new Configuration();
-    private static final ObjectMapper JSONMapper = new ObjectMapper();
+    private final ObjectMapper JSONMapper = new ObjectMapper();
 
     @Autowired
     ExchangeFeignClient exchangeFeignClient;    //клиенты Feign для обращения к внешним API
