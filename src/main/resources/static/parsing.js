@@ -1,8 +1,8 @@
-let xhr = new XMLHttpRequest(); //запрос на наш API, по дефолту стоит рубль
-callCurrency('RUB');
+let xhr = new XMLHttpRequest(); //запрос на наш API, по дефолту стоит доллар
+callCurrency('USD');
 
-let xhrAll = new XMLHttpRequest();  //запрос для получения всего списка валют (быстрее сделать здесь, чем через запрос к нашему API)
-xhrAll.open("GET", 'https://openexchangerates.org/api/currencies.json', true);  //и не нужно передавать ключ
+let xhrAll = new XMLHttpRequest();  //запрос для получения всего списка валют
+xhrAll.open("GET", '/all', true);
 xhrAll.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 xhrAll.send();
 
@@ -43,13 +43,5 @@ function showAll(jsonData)  //отображаем все данные из JSON
     document.getElementById('info').innerText = jsonData.headerMsg;
     document.getElementById('valueT').innerText = jsonData.course;
     document.getElementById('valueY').innerText = jsonData.courseYesterday;
-    document.getElementById('resultGif').setAttribute('src', makeEmbed(jsonData.gifURL));
-}
-
-function makeEmbed(url) //функция для превращения ссылки в embed, которую можно вставить себе на сайт
-{
-    let splitted = '';
-    if (url.toString().includes('-')) splitted = url.toString().split("-");
-    else splitted = url.toString().split("/");
-    return "https://giphy.com/embed/" + splitted[splitted.length - 1];
+    document.getElementById('resultGif').setAttribute('src', jsonData.gifURL);
 }

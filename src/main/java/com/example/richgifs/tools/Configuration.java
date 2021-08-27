@@ -16,6 +16,7 @@ public class Configuration  //класс для хранения конфигу�
     private final String exchangeKey, gifKey;   //ключи для валют и gif
     private final String faultGifURL;
     private final String equalityGifURL;
+    private final String baseCurrency;
 
     public Configuration()
     {
@@ -25,5 +26,6 @@ public class Configuration  //класс для хранения конфигу�
         this.gifKey = properties.getProperty("gifsKey");
         this.faultGifURL = properties.getProperty("faultGifURL");
         this.equalityGifURL = properties.getProperty("equalityGifURL");
+        this.baseCurrency = properties.getProperty("baseCurrency");
     }
 }

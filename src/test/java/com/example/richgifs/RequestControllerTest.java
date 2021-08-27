@@ -56,17 +56,17 @@ public class RequestControllerTest  //тест контроллера через
     @Test
     public void responseFromSamples() throws IOException
     {
-        String sampleExT = Files.readString(Path.of("samples/todaySample.txt"));
-        String sampleExY = Files.readString(Path.of("samples/yesterdaySample.txt"));
-        String sampleGif = Files.readString(Path.of("samples/gifSample.txt"));
+        controller.setTodayString(Files.readString(Path.of("samples/todaySample.txt")));
+        controller.setYesterdayString(Files.readString(Path.of("samples/yesterdaySample.txt")));
+        controller.setRichGifs(Files.readString(Path.of("samples/gifSample.txt")));
 
         String today = Additional.getGreenwichDate(0);
         String yesterday = Additional.getGreenwichDate(-1);
 
-        Mockito.when(controller.exchangeFeignClient.getStatistic(Mockito.anyString(), Mockito.eq(today))).thenReturn(sampleExT);
-        Mockito.when(controller.exchangeFeignClient.getStatistic(Mockito.anyString(), Mockito.eq(yesterday))).thenReturn(sampleExY);
+        Mockito.when(controller.exchangeFeignClient.getStatistic(Mockito.anyString(), Mockito.eq(today))).thenReturn(controller.getTodayString());
+        Mockito.when(controller.exchangeFeignClient.getStatistic(Mockito.anyString(), Mockito.eq(yesterday))).thenReturn(controller.getYesterdayString());
 
-        Mockito.when(controller.gifsFeignClient.getGIF(Mockito.anyString(), Mockito.anyString())).thenReturn(sampleGif);
+        Mockito.when(controller.gifsFeignClient.getGIF(Mockito.anyString(), Mockito.anyString())).thenReturn(controller.getRichGifs());
 
         String result = controller.getJSONResponse("CZK");
         Assert.notNull(result);

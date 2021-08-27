@@ -1,5 +1,7 @@
 package com.example.richgifs.tools;
 
+import com.example.richgifs.API.APIResponse;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -27,7 +29,7 @@ public class Analyze    //набор утилит для анализа отве
     public static int compareExchanges(float today, float yesterday, String currency)
     //метод сравнения двух курсов валюты, возвращает -1/0/1 в случае, если первая меньше/равны/вторая меньше
     {
-        logger.createLog("Today:" + today + "\tYesterday: " + yesterday);
+        logger.createLog("Today:" + today + " Yesterday: " + yesterday);
         return Float.compare(today, yesterday);
     }
 }

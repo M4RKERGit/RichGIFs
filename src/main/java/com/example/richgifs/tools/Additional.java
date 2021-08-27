@@ -22,4 +22,12 @@ public class Additional //класс с набором микро-утилит, 
         else dateTime = ZonedDateTime.now(ZoneOffset.UTC);
         return dateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
     }
+
+    public static String makeEmbed(String url)  //превращаем ссылку на гифку во "вставляемую" на сайт
+    {
+        String[] splitted;
+        if (url.contains("-")) splitted = url.split("-");
+        else splitted = url.split("/");
+        return "https://giphy.com/embed/" + splitted[splitted.length - 1];
+    }
 }
