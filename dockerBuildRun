@@ -1,0 +1,4 @@
+#!/bin/bash
+
+docker build --tag richgifs-docker .
+docker run --publish 8080:8080 richgifs-docker
