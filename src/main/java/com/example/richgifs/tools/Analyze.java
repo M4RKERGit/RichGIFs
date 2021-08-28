@@ -29,7 +29,7 @@ public class Analyze    //набор утилит для анализа отве
     public static int compareExchanges(float today, float yesterday, String currency)
     //метод сравнения двух курсов валюты, возвращает -1/0/1 в случае, если первая меньше/равны/вторая меньше
     {
-        logger.createLog("Today:" + today + " Yesterday: " + yesterday);
+        logger.createLog("Today: " + today + " | Yesterday: " + yesterday + " | Currency: " + currency);
         return Float.compare(today, yesterday);
     }
 }

@@ -4,9 +4,11 @@ import com.example.richgifs.tools.Logger;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.openfeign.EnableFeignClients;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 @SpringBootApplication
 @EnableFeignClients
+@EnableScheduling
 public class RichGiFsApplication
 {
     private static final Logger logger = new Logger("[" + RichGiFsApplication.class.getSimpleName().toUpperCase() + "]");
@@ -14,6 +16,6 @@ public class RichGiFsApplication
     {
         logger.createLog("RichGIFs launched");
         SpringApplication.run(RichGiFsApplication.class, args);
-        Runtime.getRuntime().addShutdownHook(new Thread(() -> {logger.createLog("Disabling RichGIFs");}));
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> logger.createLog("Disabling RichGIFs")));
     }
 }

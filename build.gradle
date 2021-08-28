@@ -6,8 +6,8 @@ plugins {
 }
 
 group = 'com.example'
-version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '11'
+version = 'V1.0'
+sourceCompatibility = '15'
 
 configurations {
     compileOnly {
@@ -28,9 +28,8 @@ dependencies {
     compileOnly 'com.fasterxml.jackson.core:jackson-core:2.6.3'
     compileOnly 'com.fasterxml.jackson.core:jackson-annotations:2.6.3'
     compileOnly 'com.fasterxml.jackson.core:jackson-databind:2.6.3'
-    compileOnly 'org.springframework.cloud:spring-cloud-starter-openfeign:3.0.3'
+    implementation 'org.springframework.cloud:spring-cloud-starter-openfeign:3.0.3' //фикс: не работает с compileOnly
     implementation 'org.springframework.boot:spring-boot-starter-web'
-    compileOnly 'org.projectlombok:lombok'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'io.rest-assured:rest-assured:4.4.0'

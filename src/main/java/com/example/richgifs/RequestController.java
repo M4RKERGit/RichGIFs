@@ -63,7 +63,7 @@ public class RequestController  //класс главного REST-контро�
     public String onlyGIF(@PathVariable String currency)   //получение только ссылки на гифку
     {
         if (todayString.isEmpty() || yesterdayString.isEmpty()) refreshCourses();
-        float today = 0, yesterday = 0;
+        float today, yesterday;
         String toRet;
         String base = configuration.getBaseCurrency();
         try
@@ -137,6 +137,7 @@ public class RequestController  //класс главного REST-контро�
     @Scheduled(fixedRate = 3600000) //запрос к внешнему API за курсами, бесплатный план обновляется раз в час
     public void refreshCourses()
     {
+        logger.createLog("Refreshing...");
         todayString = exchangeFeignClient.getStatistic(configuration.getExchangeKey(), Additional.getGreenwichDate(0));
         yesterdayString = exchangeFeignClient.getStatistic(configuration.getExchangeKey(), Additional.getGreenwichDate(-1));
         allCurrencies = exchangeFeignClient.getAllCurrencies();
