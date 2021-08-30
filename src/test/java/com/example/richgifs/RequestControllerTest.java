@@ -1,8 +1,10 @@
 package com.example.richgifs;
 
+import com.example.richgifs.api.ResponseMaker;
 import com.example.richgifs.feign.ExchangeFeignClient;
 import com.example.richgifs.feign.GifsFeignClient;
 import com.example.richgifs.tools.Additional;
+import com.example.richgifs.tools.Configuration;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
@@ -39,17 +41,22 @@ public class RequestControllerTest  //тест контроллера через
     }
 
     @Test
-    public void checkKeys()
+    public void checkKeys() //проверяем, что с конфигом все хорошо
     {
-        Assert.notNull(controller.getConfiguration().getExchangeKey());
-        Assert.notNull(controller.getConfiguration().getGifKey());
+        Assert.notNull(Configuration.getExchangeKey());
+        Assert.notNull(Configuration.getGifKey());
+        Assert.notNull(Configuration.getBaseCurrency());
+        Assert.notNull(Configuration.getEqualityGifURL());
+        Assert.notNull(Configuration.getFaultGifURL());
+        //Assert.isTrue(Configuration.getDaysBefore() != 0);    //думаю, можно позволить работу с нулем, мало ли
     }
 
     @Test
-    public void allCurrencies() throws IOException
+    public void allCurrencies() throws IOException  //проверяем обращение в /all
     {
         String sampleAll = Files.readString(Path.of("samples/allCurSample.txt"));
         Mockito.when(controller.exchangeFeignClient.getAllCurrencies()).thenReturn(sampleAll);
+        //здесь и далее - подмена возвращаемых значений на семплы через Mockito
         Assert.notNull(controller.exchangeFeignClient.getAllCurrencies());
     }
 
@@ -59,6 +66,7 @@ public class RequestControllerTest  //тест контроллера через
         controller.setTodayString(Files.readString(Path.of("samples/todaySample.txt")));
         controller.setYesterdayString(Files.readString(Path.of("samples/yesterdaySample.txt")));
         controller.setRichGifs(Files.readString(Path.of("samples/gifSample.txt")));
+        controller.setBrokeGifs(Files.readString(Path.of("samples/gifSample.txt")));
 
         String today = Additional.getGreenwichDate(0);
         String yesterday = Additional.getGreenwichDate(-1);
@@ -76,17 +84,20 @@ public class RequestControllerTest  //тест контроллера через
     @Test
     public void wrongCurrency() throws IOException
     {
-        String sampleExT = Files.readString(Path.of("samples/todaySample.txt"));
-        String sampleExY = Files.readString(Path.of("samples/yesterdaySample.txt"));
+        controller.setTodayString(Files.readString(Path.of("samples/todaySample.txt")));
+        controller.setYesterdayString(Files.readString(Path.of("samples/yesterdaySample.txt")));
+        controller.setRichGifs(Files.readString(Path.of("samples/gifSample.txt")));
+        controller.setBrokeGifs(Files.readString(Path.of("samples/gifSample.txt")));
 
         String today = Additional.getGreenwichDate(0);
         String yesterday = Additional.getGreenwichDate(-1);
 
-        Mockito.when(controller.exchangeFeignClient.getStatistic(Mockito.anyString(), Mockito.eq(today))).thenReturn(sampleExT);
-        Mockito.when(controller.exchangeFeignClient.getStatistic(Mockito.anyString(), Mockito.eq(yesterday))).thenReturn(sampleExY);
+        Mockito.when(controller.exchangeFeignClient.getStatistic(Mockito.anyString(), Mockito.eq(today))).thenReturn(controller.getTodayString());
+        Mockito.when(controller.exchangeFeignClient.getStatistic(Mockito.anyString(), Mockito.eq(yesterday))).thenReturn(controller.getYesterdayString());
 
         String result = controller.getJSONResponse("AAAAAA");
         Assert.notNull(result);
+        Assert.isTrue(ResponseMaker.getFaultResponse().equals(result));
         System.out.println("INVALID CURRENCY TEST RESULT:\n" + result);
     }
 }

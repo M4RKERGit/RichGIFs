@@ -15,6 +15,11 @@ xhr.onreadystatechange = function()
 {
     if (xhr.readyState === 4 && xhr.status === 200)
     {
+        if (xhr.responseText.match("error"))
+        {
+            document.getElementById('info').innerText = "Внутренняя ошибка сервера";
+            return;
+        }
         let jsonData = JSON.parse(xhr.responseText);
         showAll(jsonData);  //распарщенные данные отдаем для обновления информации в вебе
     }
@@ -41,6 +46,7 @@ function callCurrency(currency) //запрос к нашему API
 function showAll(jsonData)  //отображаем все данные из JSON в нашем вебе
 {
     document.getElementById('info').innerText = jsonData.headerMsg;
+    document.getElementById('secondHeader').innerText = jsonData.secondHeader;
     document.getElementById('valueT').innerText = jsonData.course;
     document.getElementById('valueY').innerText = jsonData.courseYesterday;
     document.getElementById('resultGif').setAttribute('src', jsonData.gifURL);

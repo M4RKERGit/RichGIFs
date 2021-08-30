@@ -1,7 +1,5 @@
 package com.example.richgifs.tools;
 
-import com.example.richgifs.API.APIResponse;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -19,11 +17,15 @@ public class Analyze    //набор утилит для анализа отве
         {
             Random random = new Random();
             JsonNode parsed = JSONMapper.readValue(output, JsonNode.class);
-            int index = parsed.get("data").size();
-            return parsed.get("data").get((random.nextInt(index))).get("url").asText();
+            int bound = parsed.get("data").size();
+            return parsed.get("data").get((random.nextInt(bound))).get("url").asText();
         }
-        catch (IOException e) {e.printStackTrace();}
-        return "";
+        catch (IOException e)
+        {
+            e.printStackTrace();
+            logger.createLog("Error parsing GIF string");
+            return Configuration.getFaultGifURL();  //кидаем дефолтную гифку с Йодой
+        }
     }
 
     public static int compareExchanges(float today, float yesterday, String currency)

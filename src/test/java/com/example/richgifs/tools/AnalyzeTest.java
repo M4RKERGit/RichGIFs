@@ -13,16 +13,16 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Collections;
 
-class AnalyzeTest   //unit-тесты функций анализатора с семплами, проходят
+class AnalyzeTest   //unit-тесты функций анализатора с семплами, работают только при запущенном основном приложении
 {
     String inputGif = Files.readString(Path.of("samples/gifSample.txt"));
     String inputExT = Files.readString(Path.of("samples/todaySample.txt"));
     String inputExY = Files.readString(Path.of("samples/yesterdaySample.txt"));
-    
+
     AnalyzeTest() throws IOException {}
 
     @Test
-    void currencySample() throws JsonProcessingException
+    void currencySample() throws JsonProcessingException    //проверяем верность сравнения курсов
     {
         ObjectMapper JSONMapper = new ObjectMapper();
         float today = Float.parseFloat(JSONMapper.readValue(inputExT, JsonNode.class).findValuesAsText("CZK").get(0));
@@ -31,21 +31,21 @@ class AnalyzeTest   //unit-тесты функций анализатора с �
     }
 
     @Test
-    void parseGifNonEmpty()
+    void parseGifNonEmpty() //проверяем, что ссылка на гифку есть
     {
         String result = Analyze.parseGif(inputGif);
         Assert.notEmpty(Collections.singleton(result));
     }
     @Test
-    void parseGifContainsURL()
+    void parseGifContainsURL()  //проверяем, что не нарушили форматирование
     {
         String result = Analyze.parseGif(inputGif);
         Assert.isTrue(result.contains("https://giphy.com/gifs/"));
     }
     @Test
-    void parseGifCorrectResponse() throws IOException
+    void parseGifCorrectResponse() throws IOException   //проверяем, что ссылка доступна
     {
-        String result = Analyze.parseGif(inputGif);
+        String result = Additional.makeEmbed(Analyze.parseGif(inputGif));
         URL url = new URL(result);
         HttpURLConnection huc = (HttpURLConnection) url.openConnection();
         huc.setRequestMethod("HEAD");

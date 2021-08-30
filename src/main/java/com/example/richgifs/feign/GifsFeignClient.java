@@ -9,5 +9,5 @@ import org.springframework.web.bind.annotation.PathVariable;
 public interface GifsFeignClient    //интерфейс Feign для получения гифок по запросу
 {
     @GetMapping("?q={request}&api_key={apiKey}&limit=25")
-    public String getGIF(@PathVariable String apiKey, @PathVariable String request);
+    String getGIF(@PathVariable String apiKey, @PathVariable String request);
 }

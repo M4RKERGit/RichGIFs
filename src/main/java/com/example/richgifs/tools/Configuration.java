@@ -1,31 +1,33 @@
 package com.example.richgifs.tools;
 
 import lombok.Getter;
-import lombok.Setter;
 
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Properties;
 
-@Getter
-@Setter
 public class Configuration  //класс для хранения конфигурации нашего сервиса из config.properties
 {
-    private final Logger logger = new Logger("[" + getClass().getSimpleName() + "]");
-    private static Properties properties = new Properties();
-    private final String exchangeKey, gifKey;   //ключи для валют и gif
-    private final String faultGifURL;
-    private final String equalityGifURL;
-    private final String baseCurrency;
+    private static final Logger logger = new Logger("[" + Configuration.class.getSimpleName() + "]");
+    private static final Properties properties = new Properties();
+    @Getter
+    private static final String exchangeKey, gifKey;   //ключи для валют и gif
+    @Getter
+    private static final String faultGifURL, equalityGifURL;    //ссылки на гифки, выдаваемые при фейле/равенстве валют
+    @Getter
+    private static final String baseCurrency;   //базовая валюта, относительно которой смотрятся остальные курсы
+    @Getter
+    private static final int daysBefore;    //число, на сколько дней назад надо брать курс для сравнения с нынешним, берется по модулю
 
-    public Configuration()
+    static
     {
         try {properties.load(new FileReader("config.properties"));}
         catch (IOException e) {logger.createLog("Error reading properties file"); System.exit(0);}
-        this.exchangeKey = properties.getProperty("exchangeKey");
-        this.gifKey = properties.getProperty("gifsKey");
-        this.faultGifURL = properties.getProperty("faultGifURL");
-        this.equalityGifURL = properties.getProperty("equalityGifURL");
-        this.baseCurrency = properties.getProperty("baseCurrency");
+        exchangeKey = properties.getProperty("exchangeKey");
+        gifKey = properties.getProperty("gifsKey");
+        faultGifURL = properties.getProperty("faultGifURL");
+        equalityGifURL = properties.getProperty("equalityGifURL");
+        baseCurrency = properties.getProperty("baseCurrency");
+        daysBefore = Math.abs(Integer.parseInt(properties.getProperty("daysBefore")));
     }
 }
